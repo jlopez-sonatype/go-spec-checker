@@ -56,13 +56,8 @@ func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
 			doneCount = 0
 		}
 
-		if strings.Contains(line, ").then(") {
-			thenCount++
-		}
-
-		if strings.Contains(line, "done();") {
-			doneCount++
-		}
+		incrementOnMatch(line, ").then(", &thenCount)
+		incrementOnMatch(line, "done();", &doneCount)
 	}
 
 	// Check the last block if there was one
@@ -73,4 +68,10 @@ func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
 	}
 
 	return fails
+}
+
+func incrementOnMatch(line string, match string, count *int) {
+	if strings.Contains(line, match) {
+		(*count)++
+	}
 }
