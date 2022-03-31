@@ -32,9 +32,11 @@ func checkErr(err error) {
 }
 
 func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
-	var thenCount, doneCount int
-	var lit string
-	var fails = []string{}
+	var (
+		thenCount, doneCount int
+		lit                  string
+		fails                = []string{}
+	)
 
 	for scanner.Scan() {
 		line := scanner.Text()
