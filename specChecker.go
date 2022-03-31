@@ -10,32 +10,30 @@ import (
 
 func main() {
 	file, err := os.Open("file.txt")
-	logErrorIfExists(err)
+	checkErr(err)
 
 	// remember to close the file at the end of the program
 	defer file.Close()
 
 	// read the file line by line using scanner
 	scanner := bufio.NewScanner(file)
-
 	fails := findAsyncTestsWithoutDone(scanner)
 
 	fmt.Printf("failed tests: %s", fails)
 
 	err = scanner.Err()
-	logErrorIfExists(err)
+	checkErr(err)
 }
 
-func logErrorIfExists(err error) {
+func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
-	thenCount := 0
-	doneCount := 0
-	lit := ""
+	var thenCount, doneCount int
+	var lit string
 	var fails = []string{}
 
 	for scanner.Scan() {
