@@ -10,9 +10,7 @@ import (
 
 func main() {
 	file, err := os.Open("file.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	logErrorIfExists(err)
 
 	// remember to close the file at the end of the program
 	defer file.Close()
@@ -24,7 +22,12 @@ func main() {
 
 	fmt.Printf("failed tests: %s", fails)
 
-	if err := scanner.Err(); err != nil {
+	err = scanner.Err()
+	logErrorIfExists(err)
+}
+
+func logErrorIfExists(err error) {
+	if err != nil {
 		log.Fatal(err)
 	}
 }
