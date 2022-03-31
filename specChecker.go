@@ -31,11 +31,10 @@ func checkErr(err error) {
 	}
 }
 
-func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
+func findAsyncTestsWithoutDone(scanner *bufio.Scanner) (fails []string) {
 	var (
 		thenCount, doneCount int
 		lit                  string
-		fails                = []string{}
 	)
 
 	noDonesFound := func(t, d int) bool {
