@@ -38,12 +38,16 @@ func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
 		fails                = []string{}
 	)
 
+	noDonesFound := func(t, d int) bool {
+		return t > 0 && d == 0
+	}
+
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.Contains(line, "it('") {
 			fmt.Printf("line: %s\n", line)
 			if len(lit) > 0 {
-				if thenCount > 0 && doneCount == 0 {
+				if noDonesFound(thenCount, doneCount) {
 					fails = append(fails, lit)
 				}
 			}
@@ -63,7 +67,7 @@ func findAsyncTestsWithoutDone(scanner *bufio.Scanner) []string {
 
 	// Check the last block if there was one
 	if len(lit) > 0 {
-		if thenCount > 0 && doneCount == 0 {
+		if noDonesFound(thenCount, doneCount) {
 			fails = append(fails, lit)
 		}
 	}
