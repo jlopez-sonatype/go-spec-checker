@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("file.txt")
+	file, err := os.Open(getFilePath())
 	checkErr(err)
 
 	// remember to close the file at the end of the program
@@ -25,6 +25,14 @@ func main() {
 
 	err = scanner.Err()
 	checkErr(err)
+}
+
+func getFilePath() string {
+	if len(os.Args) == 1 {
+		log.Fatal("no file to check. Please pass a path as an argument")
+	}
+
+	return os.Args[1]
 }
 
 func checkErr(err error) {
