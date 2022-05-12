@@ -44,7 +44,6 @@ func findAsyncTestsWithoutDone(scanner *bufio.Scanner) (fails []string) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.Contains(line, "it('") {
-			fmt.Printf("line: %s\n", line)
 			if len(lit) > 0 {
 				if noDonesFound(thenCount, doneCount) {
 					fails = append(fails, lit)
