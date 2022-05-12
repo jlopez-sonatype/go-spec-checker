@@ -19,7 +19,9 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	fails := findAsyncTestsWithoutDone(scanner)
 
-	fmt.Printf("failed tests: %s", fails)
+	if len(fails) > 0 {
+		fmt.Printf("failed tests: %s", fails)
+	}
 
 	err = scanner.Err()
 	checkErr(err)
